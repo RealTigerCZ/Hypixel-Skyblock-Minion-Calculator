@@ -144,7 +144,7 @@ def has_upgrade(order): #returns what upgrade have minion in upgrade slot
     elif value == 2:
         return 5.125,"Minion Expander"
     elif value == 3:
-        return "dia_spread","Diamnod Spreading"
+        return "dia_spread","Diamond Spreading"
     else:
         vycisti_obrazovku()
         print(RED + "Incorrect number, please enter selection number.")
