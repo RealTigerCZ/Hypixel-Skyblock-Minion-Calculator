@@ -10,27 +10,28 @@ YELLOW = colorama.Style.BRIGHT +  colorama.Fore.YELLOW
 def main():
     print("Welcome to Hypixel Skyblock Minion Calculator.\n")
     print("Idea from ThirtyVirus: https://www.youtube.com/watch?v=MoE-5p5IYtY\n")
-    print("This software is free to use, but it's not as great as software which was developed by ThirtyVirus\n")
+    print("This software is free to use and open source (https://github.com/RealTigerCZ/Hypixel-Skyblock-Minion-Calculator),\n but it's not as great as software which was developed by ThirtyVirus\n")
     input("Press ENTER to continue: ")
 
     vycisti_obrazovku()
     setups = []
     setups.append(calculate())
-    vypis("Your minon setup:",setups[0])
+    vypis(f"Your minion setup named '{setups[0][-1]}':",setups[0])
 
     while zadej("Do you want to add another minions? (y/n): ", "bool"):
         vycisti_obrazovku()
         setups.append(calculate())
-        vypis("Adding your {}. minon setup:".format(len(setups)),setups[len(setups)-1])
+        vypis("Added your {}. minon setup named '{}'".format(len(setups),setups[-1][-1]),setups[-1])
 
     if len(setups) > 1:
         vycisti_obrazovku()
-        print("All your minion setups:")
+        print("All your minion setups:\n")
+
         soucet = setups[0]
-        vypis("----------------------------",setups[0])
+        vypis("----------------------------\n" + BLUE + setups[0][-1] + ":",setups[0])
         setups = setups[1:]
         for setup in setups:
-            vypis("----------------------------",setup)
+            vypis("----------------------------\n" + BLUE + setup[-1] + ":",setup)
             soucet[5] += setup[5]
             soucet[6] += setup[6]*setup[5]
 
@@ -42,12 +43,9 @@ def main():
 
 
 
-
-
-
     input("Press ENTER to exit: ")
 
-def vycisti_obrazovku(): #it cleans the window
+def vycisti_obrazovku(): #it cleans the window/console
   import sys as _sys
   import subprocess as _subprocess
   if _sys.platform.startswith("win"):
@@ -63,6 +61,8 @@ def calculate():
     upgrade1,name_upgrade1 = has_upgrade("first")
     upgrade2,name_upgrade2 = has_upgrade("second")
     pocet_minionu = zadej("how many " +  GREEN + "minions" + WHITE + " do you have: ","int")
+
+    jmeno = input("Minion / group " + GREEN + "name " + WHITE + "or " + GREEN + "type: " + BLUE)
 
     bonuses = 0
 
@@ -88,7 +88,7 @@ def calculate():
     vycisti_obrazovku()
 
 
-    return [time_between_actions,items_per_actions,fuel,name_upgrade1,name_upgrade2,pocet_minionu,earnings]
+    return [time_between_actions,items_per_actions,fuel,name_upgrade1,name_upgrade2,pocet_minionu,earnings,jmeno]
 
 
 def vypis(msg,setup):
@@ -114,7 +114,7 @@ def vypis(msg,setup):
         print(BLUE  + f"For {pocet_minionu} minions:")
         print(WHITE + "1 hour: ",YELLOW+ str(earnings) + " coins")
         print(WHITE + "1 day:  ",YELLOW+ str(earnings*24) + " coins")
-        print(WHITE + "1 week: ",YELLOW+ str(earnings*24*7) + " coins")
+        print(WHITE + "1 week: ",YELLOW+ str(earnings*24*7) + " coins\n")
 
 
 def zadej(mess,typ = "str"):
