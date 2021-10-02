@@ -1,6 +1,6 @@
 
 class Minion():
-    def __init__(self, id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel, special_type, can_be_affected_by_crystal):
+    def __init__(self, id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel, special_type, can_be_affected_by_crystal, special_minion_case):
         self.__id = id
         self.__name = name
         self.__type = minion_type
@@ -136,9 +136,9 @@ class Minions():
         self.__max_id = 0
         self.__minion_list = []
 
-    def add_minion(self, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt = False, use_chicken_egg = False, use_flint_shovel = False, special_type = None, can_be_affected_by_crystal = True):
+    def add_minion(self, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt = False, use_chicken_egg = False, use_flint_shovel = False, special_type = None, can_be_affected_by_crystal = True, special_minion_case = None):
         self.__max_id += 1
-        self.__minion_list.append(Minion(self.__max_id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel, special_type, can_be_affected_by_crystal))
+        self.__minion_list.append(Minion(self.__max_id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel, special_type, can_be_affected_by_crystal, special_minion_case))
 
     def search_by_name(self, name):
         for minion in self.__minion_list:
@@ -149,6 +149,10 @@ class Minions():
         for minion in self.__minion_list:
             if minion.get_id() == id:
                 return minion
+
+    def print_short_info(self):
+        for minion in self.__minion_list:
+            print("{:2d}".format(minion.get_id()) + " " + minion.get_name())
 
 minions = Minions()
 
@@ -184,7 +188,24 @@ minions.add_minion("gravel", "mining", ["gravel", "flint"], 1, [26,26,24,24,22,2
 minions.add_minion("ice", "mining", "ice", 1, [14,14,12,12,10,10,9,9,8,8,7], 11, 0.5, -1, can_be_affected_by_crystal = False)
 minions.add_minion("sand", "mining", "sand", 1, [26,26,24,24,22,22,19,19,16,16,13], 11, 0.2, -1, can_be_affected_by_crystal = False)
 minions.add_minion("endstone", "mining", "endstone", 1, [26,26,24,24,22,22,19,19,16,16,13], 11, 0.4, -1, can_be_affected_by_crystal = False)
-minions.add_minion("mithril", "mining", ",mithril", 2, [80,80,75,75,70,70,65,65,60,60,55,50], 12, 0.4, -1)
+minions.add_minion("mithril", "mining", "mithril", 2, [80,80,75,75,70,70,65,65,60,60,55,50], 12, 0.4, -1)
+
+minions.add_minion("zombie", "combat", ["rotten flesh", "poisonous potato", "potato", "carrot"], [1,0.05,0.01,0.01], [26,26,24,24,22,22,20,20,17,17,13], 11, [0.3,0,0.1,0.1], [-1,-1,-1,-1])
+minions.add_minion("skeleton", "combat", "bone", 1, [26,26,24,24,22,22,20,20,17,17,13], 11, 0.2, -1)
+minions.add_minion("skeleton", "combat", "bone", 1, [26,26,24,24,22,22,20,20,17,17,13], 11, 0.2, -1)
+minions.add_minion("spider", "combat", ["string","spider eye"], [1,0.5], [26,26,24,24,22,22,20,20,17,17,13], 11, [0.2,0.3], [-1,-1])
+minions.add_minion("cave spider", "combat", ["spider eye", "string"], [1,0.5], [26,26,24,24,22,22,20,20,17,17,13], 11, [0.3,0.2], [-1,-1])
+minions.add_minion("creeper", "combat", "gun powder", 1, [27,27,25,25,23,23,21,21,18,18,14], 11, 0.3, -1)
+minions.add_minion("enderman", "combat", "ender pearl", 1, [32,32,30,30,28,28,25,25,22,22,18], 11, 0.3, -1)
+minions.add_minion("ghast", "combat", "ghast tear", 1, [50,50,47,47,44,44,41,41,38,38,32], 11, 0.5, -1)
+minions.add_minion("slime", "combat", "slime ball", 1.8, [26,26,24,24,22,22,19,19,16,16,12], 11, 0.2, -1)
+minions.add_minion("blaze", "combat", "blaze rod", 1, [33,33,31,31,28.5,28.5,25,25,21,21,16.5], 11, 0.3, -1)
+minions.add_minion("magma cube", "combat", "magma cream", 1.8, [32,32,30,30,28,28,25,25,22,22,18], 11, 0.2, -1)
+
+minions.add_minion("revenant", "slayer", ["rotten flesh","diamond"], [3,0.2], [29,29,26,26,23,23,19,19,14.5,14.5,10,8], 12, [0.3,0.4], [-1,-1], special_minion_case = "revenant")
+minions.add_minion("tarantula", "slayer", ["string","spider eye", "iron ingot", ], [3.16,1, 0.2], [29,29,26,26,23,23,19,19,14.5,14.5,10], 11, [0.2,0.3,0.3], [-1,-1,-1], special_minion_case = "tarantula")
+minions.add_minion("voidling", "slayer", ["quartz","obsidian"], [0.4,2.42], [45,45,42,42,39,39,35,35,30,30,24], 11, [-1.-1], [-1,-1], special_minion_case = "voidling")
+
 
 
 #snow -> not mining but other
@@ -196,3 +217,4 @@ minions.add_minion("mithril", "mining", ",mithril", 2, [80,80,75,75,70,70,65,65,
 if __name__ == "__main__":
     #testing
     print(minions.search_by_name("wheat"))
+    minions.print_short_info()
