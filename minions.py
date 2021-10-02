@@ -1,6 +1,6 @@
 
 class Minion():
-    def __init__(self, id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt):
+    def __init__(self, id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel):
         self.__id = id
         self.__name = name
         self.__type = minion_type
@@ -13,6 +13,8 @@ class Minion():
         self.__NPC_prize = NPC_prize
 
         self.__use_autosmelt = use_autosmelt
+        self.__use_chicken_egg = use_chicken_egg
+        self.__use_flint_shovel = use_flint_shovel
 
         if type(products) == str:
             self.__has_only_one_product = True
@@ -33,6 +35,14 @@ class Minion():
             to_print += "Products: "
             if self.__use_autosmelt:
                 to_print  += f"Without autosmelt upgrade: {self.__products[0]}, WITH autosmelt upgrade: {self.__products[1]}\n"
+
+            elif self.__use_chicken_egg:
+                to_print  += f"{self.__products[0]}, {self.__products[1]} + with chicken egg upgrade: {self.__products[2]}\n"
+
+            elif self.__use_flint_shovel:
+                to_print  += f"Without flint shovel upgrade: {self.__products[0]}, WITH flint shovel upgrade: {self.__products[1]}\n"
+
+
             else:
                 for product in self.__products:
                     to_print += product + ", "
@@ -108,9 +118,9 @@ class Minions():
         self.__max_id = 0
         self.__minion_list = []
 
-    def add_minion(self, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt = False):
+    def add_minion(self, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt = False, use_chicken_egg = False, use_flint_shovel = False):
         self.__max_id += 1
-        self.__minion_list.append(Minion(self.__max_id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt))
+        self.__minion_list.append(Minion(self.__max_id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel))
 
     def search_by_name(self, name):
         for minion in self.__minion_list:
@@ -133,7 +143,12 @@ minions.add_minion("melon", "farming", "melon slice", 5, [24,24,22.5,22.5,21,21,
 minions.add_minion("mushroom", "farming", ["red mushroom","brown mushroom"], [0.5,0.5], [30,30,28,28,26,26,23,23,20,20,16,12], 12, [0.5,0.5], [-1,-1])
 minions.add_minion("cocoa beans", "farming", "cocoa beans", 3, [27,27,25,25,23,23,21,21,18,18,15,12], 12, 0.2, -1)
 minions.add_minion("cactus", "farming", ["cactus","cactus green"], 3, [27,27,25,25,23,23,21,21,18,18,15,12], 12, [0.2,0.2], [-1,-1], use_autosmelt = True)
-
+minions.add_minion("sugar cane", "farming", "sugar cane", 3, [22,22,20,20,18,18,16,16,14.5,14.5,12,9], 12, 0.1, -1)
+minions.add_minion("cow", "farming", ["raw beef", "leather"], [1,1], [26,26,24,24,22,22,20,20,17,17,13,10], 12, [0.1,0.2], [-1,-1])
+minions.add_minion("pig", "farming", "raw porkchop", 1, [26,26,24,24,22,22,20,20,17,17,13,10], 12, 0.2, -1)
+minions.add_minion("chicken", "farming", ["raw chicken", "feather", "egg"], [1,1,1], [26,26,24,24,22,22,20,20,18,18,15,12], 12, [0.1,0.2,0.2], [-1,-1,-1], use_chicken_egg = True)
+minions.add_minion("sheep", "farming", ["mutton","white wool"], [1,1], [24,24,22,22,20,20,18,18,16,16,12,9], 12, [0.1,0.1], [-1,-1])
+minions.add_minion("rabbit", "farming", ["raw rabbit","rabbit's foot", "rabbit hide"], [1,0.35,0.35], [26,26,24,24,22,22,20,20,17,17,13,10], 12, [0.1,0.2,0.2], [-1,-1,-1])
 
 
 
@@ -147,4 +162,5 @@ TO TEST:
 
 
 if __name__ == "__main__":
+    #testing
     print(minions.search_by_name("wheat"))
