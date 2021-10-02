@@ -149,6 +149,7 @@ minions.add_minion("pig", "farming", "raw porkchop", 1, [26,26,24,24,22,22,20,20
 minions.add_minion("chicken", "farming", ["raw chicken", "feather", "egg"], [1,1,1], [26,26,24,24,22,22,20,20,18,18,15,12], 12, [0.1,0.2,0.2], [-1,-1,-1], use_chicken_egg = True)
 minions.add_minion("sheep", "farming", ["mutton","white wool"], [1,1], [24,24,22,22,20,20,18,18,16,16,12,9], 12, [0.1,0.1], [-1,-1])
 minions.add_minion("rabbit", "farming", ["raw rabbit","rabbit's foot", "rabbit hide"], [1,0.35,0.35], [26,26,24,24,22,22,20,20,17,17,13,10], 12, [0.1,0.2,0.2], [-1,-1,-1])
+minions.add_minion("nether wart", "farming", "nether wart", 3, [50,50,47,47,44,44,41,41,38,38,32,27], 12, 0.2, 3)
 
 
 
