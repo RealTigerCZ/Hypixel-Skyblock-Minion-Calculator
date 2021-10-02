@@ -1,4 +1,3 @@
-
 class Minion():
     def __init__(self, id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel, special_type, can_be_affected_by_crystal, special_minion_case):
         self.__id = id
@@ -25,6 +24,8 @@ class Minion():
         else:
             self.__has_only_one_product = False
             self.__products = products
+
+        self.__check()
 
     def __repr__(self):
         to_print = "Name: " + self.__name + "\n"
@@ -80,6 +81,117 @@ class Minion():
             to_print += f"Tier {i+1} -> {self.__time_between_actions[i]}s\n"
 
         return to_print
+
+    def __check(self):
+        def helper(values, types):
+            if type(values) == list:
+                for x in values:
+                    if type(x) not in types:
+                        return True
+
+        def value_check(errors_num, errors, value, value_name ,value_type, lenght = None, msg = None, negative = False, zero = False, in_list_values = None):
+            def int_check(errors_num, errors, value, value_name, negative, zero):
+                if value == -1:
+                    errors_num += 1
+                    errors += f"E{errors_num}: Invalid {value_name} -> NOT YET FINISHED! -> {value}\n"
+                elif value < 0 and not negative:
+                    errors_num += 1
+                    errors += f"E{errors_num}: Invalid {value_name} -> Can't be negative -> {value}\n"
+                elif value == 0 and not zero:
+                    errors_num += 1
+                    errors += f"E{errors_num}: Invalid {value_name} -> Can't be zero -> {value}\n"
+                return errors_num, errors
+
+            if value == None:
+                errors_num += 1
+                errors += f"E{errors_num}: Invalid {value_name} -> is not defined  -> {value}\n"
+            elif value_type == str:
+                if type(value) != value_type:
+                    errors_num += 1
+                    errors += f"E{errors_num}: Invalid {value_name} -> not a string  -> {value}\n"
+            elif value_type == list:
+                if type(value) != value_type:
+                    errors_num += 1
+                    errors += f"E{errors_num}: Invalid {value_name} -> not a list  -> {value}\n"
+                elif len(value) != lenght:
+                    errors_num += 1
+                    errors += f"E{errors_num}: Invalid lenght of {value_name} -> expected {lenght} -> and its {value}\n"
+                else:
+                    correct_type = True
+                    correct_value = True
+                    if in_list_values == "int":
+                        for item in value:
+                            if type(item) not in [int, float]:
+                                correct_type = False
+                            elif item <= 0:
+                                correct_value = False
+
+                        if not correct_type:
+                            errors_num += 1
+                            errors += f"E{errors_num}: Invalid value in {value_name} -> some value is not a number -> {value}\n"
+                        if not correct_value:
+                            errors_num += 1
+                            errors += f"E{errors_num}: Invalid value in {value_name} -> some value is zero or negative -> {value}\n"
+
+                    elif in_list_values == "str":
+                        for item in value:
+                            if type(item) != str:
+                                correct_type != False
+                        if not correct_type:
+                            errors_num += 1
+                            errors += f"E{errors_num}: Invalid value in {value_name} -> some value is not a string -> {value}\n"
+
+            elif value_type == [int, float] or value_type == [float, int]:
+                if type(value) not in value_type:
+                    errors_num += 1
+                    errors += f"E{errors_num}: Invalid {value_name} -> not a number -> {value}\n"
+                else:
+                    errors_num, errors = int_check(errors_num, errors, value, value_name, negative, zero)
+
+            elif value_type == int:
+                if type(value) != value_type:
+                    errors_num += 1
+                    errors += f"E{errors_num}: Invalid {value_name} -> not an integer -> {value}\n"
+                else:
+                    errors_num, errors = int_check(errors_num, errors, value, value_name, negative, zero)
+
+
+            elif type(value_type) == list:
+                if type(value) not in value_type:
+                    errors_num += 1
+                    errors += f"E{errors_num}: Invalid {value_name} -> {msg} -> {value}\n"
+            return errors_num, errors
+
+        errors_num = 0
+        errors = ""
+
+        errors_num, errors = value_check(errors_num, errors, self.__id, "ID", int, zero = True)
+        errors_num, errors = value_check(errors_num, errors, self.__name, "name", str)
+        errors_num, errors = value_check(errors_num, errors, self.__type, "type", str)
+
+        if self.__type not in ["mining", "farming", "slayer", "foraging", "fishing", "combat"]:
+            errors_num += 1
+            errors += f"E{errors_num}: Invalid minion type -> {self.__type}\n"
+
+        errors_num, errors = value_check(errors_num, errors, self.__time_between_actions, "time between actions", list, lenght = self.__max_tier, in_list_values = "int")
+        errors_num, errors = value_check(errors_num, errors, self.__max_tier, "max tier", int)
+        errors_num, errors = value_check(errors_num, errors, self.__max_tier, "max tier", int)
+        errors_num, errors = value_check(errors_num, errors, self.__max_tier, "max tier", int)
+
+        if self.__has_only_one_product:
+            errors_num, errors = value_check(errors_num, errors, self.__product, "product", str)
+            errors_num, errors = value_check(errors_num, errors, self.__items_per_actions, "items per actions", [int, float])
+            errors_num, errors = value_check(errors_num, errors, self.__xp_per_item, "XP per item", [int, float], zero = True)
+            errors_num, errors = value_check(errors_num, errors, self.__NPC_prize, "NPC prize", [int, float])
+        else:
+            errors_num, errors = value_check(errors_num, errors, self.__products, "product", list, lenght = len(self.__products), in_list_values = "str")
+            errors_num, errors = value_check(errors_num, errors, self.__items_per_actions, "items per actions", list, lenght = len(self.__products), in_list_values = "int")
+            errors_num, errors = value_check(errors_num, errors, self.__xp_per_item, "XP per item", list, lenght = len(self.__products), in_list_values = "int")
+            errors_num, errors = value_check(errors_num, errors, self.__NPC_prize, "NPC prize", list, lenght = len(self.__products), in_list_values = "int")
+
+
+
+        print(f"{self.__name} minion checking finished with {errors_num} error(s)\n", errors)
 
 
     def get_id(self):
@@ -164,7 +276,7 @@ minions.add_minion("pumpkin", "farming", "pumpkin", 1, [32,32,30,30,27,27,24,24,
 minions.add_minion("melon", "farming", "melon slice", 5, [24,24,22.5,22.5,21,21,18.5,18.5,16,16,13,10], 12, 0.1, -1)
 minions.add_minion("mushroom", "farming", ["red mushroom","brown mushroom"], [0.5,0.5], [30,30,28,28,26,26,23,23,20,20,16,12], 12, [0.5,0.5], [-1,-1])
 minions.add_minion("cocoa beans", "farming", "cocoa beans", 3, [27,27,25,25,23,23,21,21,18,18,15,12], 12, 0.2, -1)
-minions.add_minion("cactus", "farming", ["cactus","cactus green"], 3, [27,27,25,25,23,23,21,21,18,18,15,12], 12, [0.2,0.2], [-1,-1], use_autosmelt = True)
+minions.add_minion("cactus", "farming", ["cactus","cactus green"], [3,3], [27,27,25,25,23,23,21,21,18,18,15,12], 12, [0.2,0.2], [-1,-1], use_autosmelt = True)
 minions.add_minion("sugar cane", "farming", "sugar cane", 3, [22,22,20,20,18,18,16,16,14.5,14.5,12,9], 12, 0.1, -1)
 minions.add_minion("cow", "farming", ["raw beef", "leather"], [1,1], [26,26,24,24,22,22,20,20,17,17,13,10], 12, [0.1,0.2], [-1,-1])
 minions.add_minion("pig", "farming", "raw porkchop", 1, [26,26,24,24,22,22,20,20,17,17,13,10], 12, 0.2, -1)
