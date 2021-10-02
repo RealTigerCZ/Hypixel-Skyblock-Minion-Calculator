@@ -206,11 +206,21 @@ minions.add_minion("revenant", "slayer", ["rotten flesh","diamond"], [3,0.2], [2
 minions.add_minion("tarantula", "slayer", ["string","spider eye", "iron ingot", ], [3.16,1, 0.2], [29,29,26,26,23,23,19,19,14.5,14.5,10], 11, [0.2,0.3,0.3], [-1,-1,-1], special_minion_case = "tarantula")
 minions.add_minion("voidling", "slayer", ["quartz","obsidian"], [0.4,2.42], [45,45,42,42,39,39,35,35,30,30,24], 11, [-1.-1], [-1,-1], special_minion_case = "voidling")
 
+minions.add_minion("oak", "foraging", "oak wood", 4, [48,48,45,45,42,42,38,38,33,33,27], 11, 0.1, -1)
+minions.add_minion("birch", "foraging", "birch wood", 4, [48,48,45,45,42,42,38,38,33,33,27], 11, 0.1, -1)
+minions.add_minion("spruce", "foraging", "spruce wood", 4, [48,48,45,45,42,42,38,38,33,33,27], 11, 0.1, -1)
+minions.add_minion("dark oak", "foraging", "dark oak wood", 4, [48,48,45,45,42,42,38,38,33,33,27], 11, 0.1, -1)
+minions.add_minion("acacia", "foraging", "acacia wood", 4, [48,48,45,45,42,42,38,38,33,33,27], 11, 0.1, -1)
+minions.add_minion("jungle", "foraging", "jungle wood", 4, [48,48,45,45,42,42,38,38,33,33,27], 11, 0.1, -1)
+
+#other
+minions.add_minion("flower", "foraging", "Allium, Azure Bluet, Blue Orchid, Dandelion, Poppy, Peony, Oxeye Daisy, Rose Bush, Lilac, Red Tulip, Sunflower, White Tulip, Pink Tulip, Orange Tulips flower randomly: The two-high flowers can be turned into their specific dyes and sold for two coins instead of 1", 0, [30,29,28,27,26,25,24,23,22,20,18], 11, -1, 1, special_type = "other", special_minion_case = "flower")
+minions.add_minion("snow", "mining", "snow ball", 4, [13,13,12,12,11,11,9.5,9.5,8,8,6.5], 11, 0.1, -1, special_type = "other")
+
+minions.add_minion("clay", "fishing", "clay", 4, [32,32,30,30,27.5,27.5,24,24,20,20,16], 11, 0.1, -1, can_be_affected_by_crystal = False, special_type = "mining")
+minions.add_minion("fishing", "fishing", ["raw fish", "raw salmon", "pufferfish", "clownfish", "prismarine crystals", "prismarine shard", "sponge"], [1, 0.5, 0.24, 0.08, 0.06, 0.06, 0.06], [78,75,72,72,68,68,62.5,62.5,53,53,35], 11, [0.5, 0.7, 1, 2, 0.25, 0.25, 0.5], [-1,-1,-1,-1,-1,-1,-1])
 
 
-#snow -> not mining but other
-#clay -> mining but fishing :D
-#flower -> not foraging but other
 
 
 
