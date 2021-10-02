@@ -1,6 +1,6 @@
 
 class Minion():
-    def __init__(self, id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel):
+    def __init__(self, id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel, special_type, can_be_affected_by_crystal):
         self.__id = id
         self.__name = name
         self.__type = minion_type
@@ -15,6 +15,8 @@ class Minion():
         self.__use_autosmelt = use_autosmelt
         self.__use_chicken_egg = use_chicken_egg
         self.__use_flint_shovel = use_flint_shovel
+        self.__special_type = special_type
+        self.__affected_by_crystal = can_be_affected_by_crystal
 
         if type(products) == str:
             self.__has_only_one_product = True
@@ -89,6 +91,16 @@ class Minion():
     def get_time_between_actions(self, tier):
         return self.__time_between_actions[tier-1]
 
+    def get_primary_type(self):
+        return self.__minion_type
+
+    def get_boost_type(self):
+        if self.__affected_by_crystal:
+            if self.__special_type:
+                return self.__special_type
+            else:
+                return self.__minion_type
+
     def get_max_tier(self):
         return self.__max_tier
 
@@ -113,14 +125,20 @@ class Minion():
     def use_autosmelt(self):
         return self.__use_autosmelt
 
+    def use_chicken_egg(self):
+        return self.__use_chicken_egg
+
+    def use_flint_shovel(self):
+        return self.__use_flint_shovel
+
 class Minions():
     def __init__(self):
         self.__max_id = 0
         self.__minion_list = []
 
-    def add_minion(self, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt = False, use_chicken_egg = False, use_flint_shovel = False):
+    def add_minion(self, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt = False, use_chicken_egg = False, use_flint_shovel = False, special_type = None, can_be_affected_by_crystal = True):
         self.__max_id += 1
-        self.__minion_list.append(Minion(self.__max_id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel))
+        self.__minion_list.append(Minion(self.__max_id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, NPC_prize, use_autosmelt, use_chicken_egg, use_flint_shovel, special_type, can_be_affected_by_crystal))
 
     def search_by_name(self, name):
         for minion in self.__minion_list:
@@ -151,14 +169,27 @@ minions.add_minion("sheep", "farming", ["mutton","white wool"], [1,1], [24,24,22
 minions.add_minion("rabbit", "farming", ["raw rabbit","rabbit's foot", "rabbit hide"], [1,0.35,0.35], [26,26,24,24,22,22,20,20,17,17,13,10], 12, [0.1,0.2,0.2], [-1,-1,-1])
 minions.add_minion("nether wart", "farming", "nether wart", 3, [50,50,47,47,44,44,41,41,38,38,32,27], 12, 0.2, 3)
 
+minions.add_minion("cobblestone", "mining", "cobblestone", 1, [14,14,12,12,10,10,9,9,8,8,7,6], 12, 0.1, -1, can_be_affected_by_crystal = False)
+minions.add_minion("coal", "mining", "coal", 1, [15,15,13,13,12,12,10,10,9,9,7,6], 12, 0.3, -1)
+minions.add_minion("iron", "mining", ["iron ore", "iron ingot"], 1, [17,17,15,15,14,14,12,12,10,10,8,7], 12, [0.3,0.3], [-1,-1], use_autosmelt = True)
+minions.add_minion("gold", "mining", ["gold ore", "gold ingot"], 1, [22,22,20,20,18,18,16,16,14,14,11,9], 12, [0.4,0.4], [-1,-1], use_autosmelt = True)
+minions.add_minion("diamond", "mining", "diamond", 1, [29,29,27,27,25,25,22,22,19,19,15,12], 12, 0.4, -1)
+minions.add_minion("lapis", "mining", "lapis lazuli", 6, [29,29,27,27,25,25,23,23,21,21,18,16], 12, 0.1, -1)
+minions.add_minion("emerald", "mining", "emerald", 1, [28,28,26,26,24,24,21,21,18,18,14,12], 12, 0.4, -1)
+minions.add_minion("redstone", "mining", "redstone", 4.5, [29,29,27,27,25,25,23,23,21,21,18,16], 12, 0.2, -1)
+minions.add_minion("quartz", "mining", "nether quartz", 1, [22.5,22.5,21,21,19,19,17,17,14.5,14.5,11.5], 11, 0.3, -1)
+minions.add_minion("obsidian", "mining", "obsidian", 1, [45,45,42,42,39,39,35,35,30,30,24,21], 12, 0.4, -1, can_be_affected_by_crystal = False)
+minions.add_minion("glowstone", "mining", "glowstone", 3, [25,25,23,23,21,21,19,19,16,16,13], 11, 0.2, -1, can_be_affected_by_crystal = False)
+minions.add_minion("gravel", "mining", ["gravel", "flint"], 1, [26,26,24,24,22,22,19,19,16,16,13], 11, [0.2,0.2], [-1,-1], use_flint_shovel = True)
+minions.add_minion("ice", "mining", "ice", 1, [14,14,12,12,10,10,9,9,8,8,7], 11, 0.5, -1, can_be_affected_by_crystal = False)
+minions.add_minion("sand", "mining", "sand", 1, [26,26,24,24,22,22,19,19,16,16,13], 11, 0.2, -1, can_be_affected_by_crystal = False)
+minions.add_minion("endstone", "mining", "endstone", 1, [26,26,24,24,22,22,19,19,16,16,13], 11, 0.4, -1, can_be_affected_by_crystal = False)
+minions.add_minion("mithril", "mining", ",mithril", 2, [80,80,75,75,70,70,65,65,60,60,55,50], 12, 0.4, -1)
 
 
-
-"""
-TO TEST:
- - recalcucalte profit
- - check autosmelt
-"""
+#snow -> not mining but other
+#clay -> mining but fishing :D
+#flower -> not foraging but other
 
 
 
