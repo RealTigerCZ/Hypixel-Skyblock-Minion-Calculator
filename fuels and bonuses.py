@@ -88,12 +88,93 @@ fuels.add_fuel("tasty cheese", 1, 2, multiplicative = True)
 fuels.add_fuel("catalyst", 3, 3, multiplicative = True)
 fuels.add_fuel("hyper catalyst", 6, 4, multiplicative = True)
 
+class Crystal():
+    def __init__(self, id, name, boost, affecting, radius):
+        self.__id = id
+        self.__name = name
+        self.__boost = boost
+        self.__affecting = affecting
+        self.__radius = radius
+    def __repr__(self):
+        toPrint = ""
+        toPrint += self.__name + "\n"
+        toPrint += f"ID: {self.__id}\n"
+        toPrint += f"Boost: {self.__boost}\n"
+        toPrint += f"affecting: {self.__affecting}\n"
+        toPrint += f"radius: {self.__radius}\n"
 
+        return toPrint
+
+    def get_id(self):
+        return self.__id
+
+    def get_name(self):
+        return self.__name
+
+    def get_boost(self):
+        return self.__boost
+
+    def get_radius(self):
+        return self.__radius
+
+    def is_affecting(self, who):
+        return self.__affecting == who
+
+
+class Other():
+    def __init__(self, id, name, boost):
+        self.__id = id
+        self.__name = name
+        self.__boost = boost
+
+    def get_id(self):
+        return self.__id
+
+    def get_name(self):
+        return self.__name
+
+    def get_boost(self):
+        return self.__boost
 
 class Other_bonuses():
-    def __init__(self, id):
-        pass
+    def __init__(self):
+        self.__max_id = 0
+        self.__all_list = []
+        self.__crystal_list = []
 
+
+    def add_crystal(self, name, boost, affecting, radius):
+        self.__max_id += 1
+        self.__crystal_list.append(Crystal(self.__max_id, name, boost, affecting, radius))
+        self.__all_list.append(Crystal(self.__max_id, name, boost, affecting, radius))
+
+
+    def search_all_by_name(self, name):
+        for boost in self.__all_list:
+            if boost.get_name() == name:
+                return boost
+
+    def search_crystals_by_name(self, name):
+        for c in self.__crystal_list:
+            if c.get_name() == name:
+                return c
+
+    def search_crystals_by_affecting(self, minion_type):
+        for c in self.__crystal_list:
+            if c.is_affecting(minion_type):
+                return c
+
+    def print_short_info(self):
+        print("Crystals:")
+        for crystal in self.__crystal_list:
+            print("{:2d}".format(crystal.get_id()) + " " + crystal.get_name())
+        print("\nOther:")
+
+bonuses = Other_bonuses()
+
+bonuses.add_crystal("farm crystal", 10, "farming", 8)
+bonuses.add_crystal("woodcutting crystal", 10, "foraging", 12)
+bonuses.add_crystal("mithril crystal", 10, "mining", 40)
 
 
 if __name__ == "__main__":
@@ -102,3 +183,9 @@ if __name__ == "__main__":
     print(fuels.search_by_name("enchanted lava bucket"))
     print(fuels.search_by_name("catalyst"))
     fuels.print_short_info()
+    print()
+
+    print(bonuses.search_all_by_name("mithril crystal"))
+    print(bonuses.search_crystals_by_name("farm crystal"))
+    print(bonuses.search_crystals_by_affecting("foraging"))
+    bonuses.print_short_info()
