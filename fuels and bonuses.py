@@ -13,7 +13,21 @@ class MinionFuel():
             self.__infinite = False
 
     def __repr__(self):
-        return super().__repr__()
+        toPrint = ""
+        toPrint += self.__name + "\n"
+        toPrint += f"ID: {self.__id}\n"
+
+        if self.__infinite:
+            toPrint += f"fuel time: infinite\n"
+        else:
+            toPrint += f"fuel time: {self.__fuel_time} hour(s)\n"
+
+        if self.__multiplicative:
+            toPrint += f"Boost: {self.__boost} times\n"
+        else:
+            toPrint += f"Boost: {self.__boost}%\n"
+
+        return toPrint
 
     def get_id(self):
         return self.__id
@@ -60,9 +74,19 @@ class Fuels():
 fuels = Fuels()
 
 fuels.add_fuel("coal", 0.5, 5)
-
-
-
+fuels.add_fuel("block of coal", 5, 5)
+fuels.add_fuel("enchanted bread", 12, 5)
+fuels.add_fuel("enchanted coal", 24, 10)
+fuels.add_fuel("enchanted charcoal", 36, 20)
+fuels.add_fuel("solar panel", -1, 25, special_case = "solar panel")
+fuels.add_fuel("enchanted lava bucket", -1, 25)
+fuels.add_fuel("magma bucket", -1, 30)
+fuels.add_fuel("plasma bucket", -1, 35)
+fuels.add_fuel("hamster wheel", 24, 50)
+fuels.add_fuel("foul flesh", 5, 90)
+fuels.add_fuel("tasty cheese", 1, 2, multiplicative = True)
+fuels.add_fuel("catalyst", 3, 3, multiplicative = True)
+fuels.add_fuel("hyper catalyst", 6, 4, multiplicative = True)
 
 class Other_bonuses():
     def __init__(self, id):
