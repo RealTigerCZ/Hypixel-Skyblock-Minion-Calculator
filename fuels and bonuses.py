@@ -18,9 +18,9 @@ class MinionFuel():
         toPrint += f"ID: {self.__id}\n"
 
         if self.__infinite:
-            toPrint += f"fuel time: infinite\n"
+            toPrint += f"Fuel time: infinite\n"
         else:
-            toPrint += f"fuel time: {self.__fuel_time} hour(s)\n"
+            toPrint += f"Fuel time: {self.__fuel_time} hour(s)\n"
 
         if self.__multiplicative:
             toPrint += f"Boost: {self.__boost} times\n"
@@ -88,6 +88,8 @@ fuels.add_fuel("tasty cheese", 1, 2, multiplicative = True)
 fuels.add_fuel("catalyst", 3, 3, multiplicative = True)
 fuels.add_fuel("hyper catalyst", 6, 4, multiplicative = True)
 
+
+
 class Other_bonuses():
     def __init__(self, id):
         pass
@@ -97,4 +99,6 @@ class Other_bonuses():
 if __name__ == "__main__":
     #testing
     print(fuels.search_by_name("coal"))
+    print(fuels.search_by_name("enchanted lava bucket"))
+    print(fuels.search_by_name("catalyst"))
     fuels.print_short_info()

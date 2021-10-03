@@ -53,7 +53,7 @@ class Minion():
                 to_print = to_print[:-2] + "\n"
 
         if self.__has_only_one_product:
-            to_print += "Items per action: " + self.__items_per_actions + "\n"
+            to_print += f"Items per action: {self.__items_per_actions}\n"
         else:
             to_print += "Items per action: "
             for i in range(len(self.__products)):
@@ -61,7 +61,7 @@ class Minion():
             to_print = to_print[:-2] + "\n"
 
         if self.__has_only_one_product:
-            to_print += "XP per item: " + self.__xp_per_item + "\n"
+            to_print += f"XP per item:  {self.__xp_per_item}\n"
         else:
             to_print += "XP per item: "
             for i in range(len(self.__products)):
@@ -69,7 +69,7 @@ class Minion():
             to_print = to_print[:-2] + "\n"
 
         if self.__has_only_one_product:
-            to_print += "NPC prize, coins per item: " + self.__NPC_prize + "\n"
+            to_print += f"NPC prize, coins per item:  {self.__NPC_prize}\n"
         else:
             to_print += "NPC prize, coins per item: "
             for i in range(len(self.__products)):
@@ -267,9 +267,7 @@ class Minions():
                 return minion
 
     def search_by_id(self, id):
-        for minion in self.__minion_list:
-            if minion.get_id() == id:
-                return minion
+        return self.__minion_list[id-1]
 
     def print_short_info(self):
         for minion in self.__minion_list:
@@ -287,11 +285,11 @@ minions.add_minion("mushroom", "farming", ["red mushroom","brown mushroom"], [0.
 minions.add_minion("cocoa beans", "farming", "cocoa beans", 3, [27,27,25,25,23,23,21,21,18,18,15,12], 12, 0.2, 3)
 minions.add_minion("cactus", "farming", ["cactus","cactus green"], [3,3], [27,27,25,25,23,23,21,21,18,18,15,12], 12, [0.2,0.2], [1,1], use_autosmelt = True)
 minions.add_minion("sugar cane", "farming", "sugar cane", 3, [22,22,20,20,18,18,16,16,14.5,14.5,12,9], 12, 0.1, 2)
-minions.add_minion("cow", "farming", ["raw beef", "leather"], [1,1], [26,26,24,24,22,22,20,20,17,17,13,10], 12, [0.1,0.2], [4,3])
-minions.add_minion("pig", "farming", "raw porkchop", 1, [26,26,24,24,22,22,20,20,17,17,13,10], 12, 0.2, 5)
-minions.add_minion("chicken", "farming", ["raw chicken", "feather", "egg"], [1,1,1], [26,26,24,24,22,22,20,20,18,18,15,12], 12, [0.1,0.2,0.2], [4,3,3], use_chicken_egg = True)
-minions.add_minion("sheep", "farming", ["mutton","white wool"], [1,1], [24,24,22,22,20,20,18,18,16,16,12,9], 12, [0.1,0.1], [5,2])
-minions.add_minion("rabbit", "farming", ["raw rabbit","rabbit's foot", "rabbit hide"], [1,0.35,0.35], [26,26,24,24,22,22,20,20,17,17,13,10], 12, [0.1,0.2,0.2], [4,5,5])
+minions.add_minion("cow", "farming", ["raw beef", "leather"], [1,1], [26,26,24,24,22,22,20,20,17,17,13,10], 12, [0.1,0.2], [4,3], can_be_affected_by_crystal = False)
+minions.add_minion("pig", "farming", "raw porkchop", 1, [26,26,24,24,22,22,20,20,17,17,13,10], 12, 0.2, 5, can_be_affected_by_crystal = False)
+minions.add_minion("chicken", "farming", ["raw chicken", "feather", "egg"], [1,1,1], [26,26,24,24,22,22,20,20,18,18,15,12], 12, [0.1,0.2,0.2], [4,3,3], use_chicken_egg = True, can_be_affected_by_crystal = False)
+minions.add_minion("sheep", "farming", ["mutton","white wool"], [1,1], [24,24,22,22,20,20,18,18,16,16,12,9], 12, [0.1,0.1], [5,2], can_be_affected_by_crystal = False)
+minions.add_minion("rabbit", "farming", ["raw rabbit","rabbit's foot", "rabbit hide"], [1,0.35,0.35], [26,26,24,24,22,22,20,20,17,17,13,10], 12, [0.1,0.2,0.2], [4,5,5], can_be_affected_by_crystal = False)
 minions.add_minion("nether wart", "farming", "nether wart", 3, [50,50,47,47,44,44,41,41,38,38,32,27], 12, 0.2, 3)
 
 minions.add_minion("cobblestone", "mining", "cobblestone", 1, [14,14,12,12,10,10,9,9,8,8,7,6], 12, 0.1, 1, can_be_affected_by_crystal = False)
@@ -347,4 +345,5 @@ minions.add_minion("fishing", "fishing", ["raw fish", "raw salmon", "pufferfish"
 if __name__ == "__main__":
     #testing
     print(minions.search_by_name("wheat"))
+    print(minions.search_by_id(8))
     minions.print_short_info()
