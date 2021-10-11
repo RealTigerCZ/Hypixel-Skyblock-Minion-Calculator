@@ -1,3 +1,8 @@
+#Added hard coded ONLY LINE comments
+#/ means cannot be sold to NPC
+#-1 means value not implemented 
+
+#source: https://hypixel.net/threads/npc-sell-prices-for-bazaar-items.3251182/
 Wheat	1
 Enchanted Bread	60
 Hay Bale	9
@@ -5,17 +10,18 @@ Enchanted Hay Bale	1300
 Carrot	1
 Enchanted Carrot	160
 Enchanted Carrot on a Stick	10240
+Enchanted Carrot On A Stick	10240
 Enchanted Golden Carrot	20608
 Potato	1
 Enchanted Potato	160
 Enchanted Baked Potato	25600
 Pumpkin	4
 Enchanted Pumpkin	640
-Melon	0,5
+Melon	0.5
 Enchanted Melon	160
 Enchanted Glistering Melon	1000
 Enchanted Melon Block	25600
-Seeds	0,5
+Seeds	0.5
 Enchanted Seeds	80
 Red Mushroom	4
 Enchanted Red Mushroom	640
@@ -25,7 +31,7 @@ Brown Mushroom	4
 Enchanted Brown Mushroom	640
 Brown Mushroom Block	4
 Enchanted Brown Mushroom Block	2300
-Cocoa Bean	3
+Cocoa Beans	3
 Enchanted Cocoa Bean	480
 Enchanted Cookie	61500
 Cactus	1
@@ -54,7 +60,7 @@ Enchanted Mutton	800
 Enchanted Cooked Mutton	128000
 Raw Rabbit	4
 Enchanted Raw Rabbit	640
-Rabbit Foot	5
+Rabbit's Foot	5
 Rabbit Hide	5
 Enchanted Rabbit Foot	800
 Enchanted Rabbit Hide	2880
@@ -96,7 +102,7 @@ Iron Ingot	3
 Enchanted Iron	480
 Enchanted Iron Block	76800
 Gold Ingot	4
-Enchanted Golden Carrot	640
+Enchanted Gold	640
 Enchanted Gold Block	102000
 Diamond	8
 Enchanted Diamond	1280
@@ -121,8 +127,8 @@ Enchanted Glowstone	61000
 Gravel	3
 Flint	4
 Enchanted Flint	640
-Ice	0,5
-Packed Ice	4,5
+Ice	0.5
+Packed Ice	4.5
 Enchanted Ice	80
 Enchanted Packed Ice	12800
 Netherrack	1
@@ -148,7 +154,7 @@ Enchanted Jungle Wood	320
 Raw Fish	6
 Enchanted Raw Fish	960
 Enchanted Cooked Fish	150000
-Salmon	10
+Raw Salmon	10
 Enchanted Raw Salmon	1600
 Enchanted Cooked Salmon	256000
 Clownfish	20
@@ -185,9 +191,10 @@ Tarantula Silk	/
 Wolf Tooth	/
 Golden Tooth	/
 Hot Potato Book	13000
+Fuming Potato Book / 
 Compactor	640
 Super Compactor 3000	50000
-Summoning Eye	-
+Summoning Eye	/
 Protector Dragon Fragment	/
 Old Dragon Fragment	/
 Unstable Dragon Fragment	/
@@ -206,5 +213,104 @@ Purple Candy	/
 White Gift	/
 Green Gift	/
 Red Gift	/
-Recombobulator 3000	-
+Recombobulator 3000	/
 Stock of Stonks	/
+
+
+#missing from source file
+Booster Cookie	/
+Magma Cream	8
+Enchanted Magma Cream	1280
+Ancient Claw	200
+Enchanted Ancient Claw	32000
+Daedalus Stick	-1
+Griffin Feather	1000
+Nurse Shark Tooth	/
+Shark Fin	/
+Tiger Shark Tooth	/
+Enchanted Shark Fin	/
+Great White Shark Tooth	/
+Blue Shark Tooth	/
+Shark Bait	/
+Bazaar Cookie	/
+Refined Mineral	/
+Hyper Catalyst	500
+Spooky Shard	/
+Pumpkin Guts	/
+Ectoplasm	/
+Soul Fragment	/
+Werewolf Skin	/
+Jacob's Ticket	/
+Tightly-Tied Hay Bale	187200
+Polished Pumpkin	102400
+Mutant Nether Wart	76800
+Experience Bottle	5
+Grand Experience Bottle	480
+Colossal Experience Bottle	5000
+Titanic Experience Bottle	5000
+Green Jerry Box	/
+Golden Jerry Box	/
+Purple Jerry Box	/
+Blue Jerry Box	/
+Refined Mithril	256000
+Titanium	20
+Mithril	10
+Starfall	15
+Refined Titanium	51200
+Refined Diamond	409600
+Enchanted Mithril	1600
+Enchanted Titanium	3200
+Power Crystal	1920
+Enchanted Netherrack	160
+Plasma Bucket	-1
+Treasurite	5000
+Dwarven Super Compactor	100000
+Magma Bucket	-1
+Raw Soulflow	/
+Null Atom	33333
+Null Ovoid	/
+Null Sphere	/
+Soulflow	1
+Absolute Ender Pearl	11200
+Rough Amethyst Gemstone	4
+Rough Ruby Gemstone	4
+Rough Jasper Gemstone	4
+Rough Jade Gemstone	4
+Rough Sapphire Gemstone	4
+Rough Topaz Gemstone	4
+Rough Amber Gemstone	4
+Flawed Amethyst Gemstone	320
+Flawed Jade Gemstone	320
+Flawed Topaz Gemstone	320
+Flawed Sapphire Gemstone	320
+Flawed Jasper Gemstone	320
+Flawed Amber Gemstone	320
+Flawed Ruby Gemstone	320
+Fine Sapphire Gemstone	25600
+Fine Amber Gemstone	25600
+Fine Amethyst Gemstone	25600
+Fine Jasper Gemstone	25600
+Fine Jade Gemstone	25600
+Fine Ruby Gemstone	25600
+Fine Topaz Gemstone	25600
+Flawless Amber Gemstone	2048000
+Flawless Jade Gemstone	2048000
+Flawless Amethyst Gemstone	2048000
+Flawless Topaz Gemstone	2048000
+Flawless Ruby Gemstone	2048000
+Flawless Sapphire Gemston	2048000
+Flawless Jasper Gemstone	2048000
+Perfect Sapphire Gemstone		10240000
+Perfect Topaz Gemstone	10240000
+Perfect Amethyst Gemstone	10240000
+Perfect Jade Gemstone	10240000
+Perfect Ruby Gemstone	10240000
+Perfect Jasper Gemstone	10240000
+Perfect Amber Gemstone	10240000
+Yoggie	100
+Sludge Juice	/
+Concentrated Stone	-1
+Hard Stone	1
+Enchanted Hard Stone	576
+
+
