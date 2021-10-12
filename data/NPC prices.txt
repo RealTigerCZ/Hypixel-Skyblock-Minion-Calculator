@@ -223,7 +223,7 @@ Magma Cream	8
 Enchanted Magma Cream	1280
 Ancient Claw	200
 Enchanted Ancient Claw	32000
-Daedalus Stick	-1
+Daedalus Stick	250000
 Griffin Feather	1000
 Nurse Shark Tooth	/
 Shark Fin	/
@@ -262,10 +262,10 @@ Enchanted Mithril	1600
 Enchanted Titanium	3200
 Power Crystal	1920
 Enchanted Netherrack	160
-Plasma Bucket	-1
+Plasma Bucket	50000
 Treasurite	5000
 Dwarven Super Compactor	100000
-Magma Bucket	-1
+Magma Bucket	50000
 Raw Soulflow	/
 Null Atom	33333
 Null Ovoid	/
@@ -309,7 +309,7 @@ Perfect Jasper Gemstone	10240000
 Perfect Amber Gemstone	10240000
 Yoggie	100
 Sludge Juice	/
-Concentrated Stone	-1
+Concentrated Stone	200000
 Hard Stone	1
 Enchanted Hard Stone	576
 
