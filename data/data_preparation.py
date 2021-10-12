@@ -1,6 +1,10 @@
+import os
+file_path =  os.path.dirname(os.path.realpath(__file__))
+
+#API from:
 link = "https://sky.shiiyu.moe/api/v2/bazaar"
-npc_price_data_path = "./NPC prices.txt"
-missing_item_path = "./missing_npc_price_items_added_to_bazaar.txt"
+npc_price_data_path = file_path + "/NPC prices.txt"
+missing_item_path = file_path + "/missing_npc_price_items_added_to_bazaar.txt"
 
 
 
@@ -28,6 +32,7 @@ def prepare_data(debug_comment = False):
 
     if missing_items_count:
         print(f"Warning: There is/are {missing_items_count} missing npc price(s), writed to: {missing_item_path}\n")
+
 
     return data
 
