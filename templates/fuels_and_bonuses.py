@@ -1,7 +1,7 @@
 class MinionFuel():
-    def __init__(self, id, name, fuel_time, boost, multiplicative = False, special_case = None):
+    def __init__(self, id, item, fuel_time, boost, multiplicative = False, special_case = None):
         self.__id = id
-        self.__name = name
+        self.__item = item
         self.__fuel_time = fuel_time
         self.__boost = boost
         self.__multiplicative = multiplicative
@@ -14,7 +14,11 @@ class MinionFuel():
 
     def __repr__(self):
         toPrint = ""
-        toPrint += self.__name + "\n"
+        if self.has_item_on_bazaar():
+            toPrint += self.__item.get_name() + "\n"
+        else:
+            toPrint += self.__item + "\n"
+
         toPrint += f"ID: {self.__id}\n"
 
         if self.__infinite:
@@ -32,8 +36,11 @@ class MinionFuel():
     def get_id(self):
         return self.__id
 
-    def get_name(self):
-        return self.__name
+    def has_item_on_bazaar(self):
+        return type(self.__item) != "str"
+
+    def get_item(self):
+        return self.__item
 
     def get_fuel_time(self):
         return self.__fuel_time
@@ -47,14 +54,15 @@ class MinionFuel():
     def is_infinite(self):
         return self.__infinite
 
+
 class Fuels():
     def __init__(self):
         self.__max_id = 0
         self.__fuel_list = []
 
-    def add_fuel(self, name, fuel_time, boost, multiplicative = False, special_case = None):
+    def add_fuel(self, item, fuel_time, boost, multiplicative = False, special_case = None):
         self.__max_id += 1
-        self.__fuel_list.append(MinionFuel(self.__max_id, name, fuel_time, boost, multiplicative, special_case))
+        self.__fuel_list.append(MinionFuel(self.__max_id, item, fuel_time, boost, multiplicative, special_case))
 
     def search_by_name(self, name):
         for fuel in self.__fuel_list:
@@ -71,23 +79,6 @@ class Fuels():
             print("{:2d}".format(fuel.get_id()) + " " + fuel.get_name())
 
 
-fuels = Fuels()
-
-fuels.add_fuel("coal", 0.5, 5)
-fuels.add_fuel("block of coal", 5, 5)
-fuels.add_fuel("enchanted bread", 12, 5)
-fuels.add_fuel("enchanted coal", 24, 10)
-fuels.add_fuel("enchanted charcoal", 36, 20)
-fuels.add_fuel("solar panel", -1, 25, special_case = "solar panel")
-fuels.add_fuel("enchanted lava bucket", -1, 25)
-fuels.add_fuel("magma bucket", -1, 30)
-fuels.add_fuel("plasma bucket", -1, 35)
-fuels.add_fuel("hamster wheel", 24, 50)
-fuels.add_fuel("foul flesh", 5, 90)
-fuels.add_fuel("tasty cheese", 1, 2, multiplicative = True)
-fuels.add_fuel("catalyst", 3, 3, multiplicative = True)
-fuels.add_fuel("hyper catalyst", 6, 4, multiplicative = True)
-
 class Crystal():
     def __init__(self, id, name, boost, affecting, radius):
         self.__id = id
@@ -95,6 +86,7 @@ class Crystal():
         self.__boost = boost
         self.__affecting = affecting
         self.__radius = radius
+
     def __repr__(self):
         toPrint = ""
         toPrint += self.__name + "\n"
@@ -170,22 +162,33 @@ class Other_bonuses():
             print("{:2d}".format(crystal.get_id()) + " " + crystal.get_name())
         print("\nOther:")
 
-bonuses = Other_bonuses()
-
-bonuses.add_crystal("farm crystal", 10, "farming", 8)
-bonuses.add_crystal("woodcutting crystal", 10, "foraging", 12)
-bonuses.add_crystal("mithril crystal", 10, "mining", 40)
 
 
-if __name__ == "__main__":
-    #testing
-    print(fuels.search_by_name("coal"))
-    print(fuels.search_by_name("enchanted lava bucket"))
-    print(fuels.search_by_name("catalyst"))
-    fuels.print_short_info()
-    print()
+def create_fuels(items):
+    fuels = Fuels()
 
-    print(bonuses.search_all_by_name("mithril crystal"))
-    print(bonuses.search_crystals_by_name("farm crystal"))
-    print(bonuses.search_crystals_by_affecting("foraging"))
-    bonuses.print_short_info()
+    fuels.add_fuel(items.search_by_name("Coal"), 0.5, 5)
+    fuels.add_fuel("Block of Coal", 5, 5)
+    fuels.add_fuel(items.search_by_name("Enchanted Bread"), 12, 5)
+    fuels.add_fuel(items.search_by_name("Enchanted Coal"), 24, 10)
+    fuels.add_fuel(items.search_by_name("Enchanted Charcoal"), 36, 20)
+    fuels.add_fuel(items.search_by_name("Solar Panel"), -1, 25, special_case = "solar panel")
+    fuels.add_fuel(items.search_by_name("Enchanted Lava Bucket"), -1, 25)
+    fuels.add_fuel(items.search_by_name("Magma Bucket"), -1, 30)
+    fuels.add_fuel(items.search_by_name("Plasma Bucket"), -1, 35)
+    fuels.add_fuel(items.search_by_name("Hamster Wheel"), 24, 50)
+    fuels.add_fuel(items.search_by_name("Foul Flesh"), 5, 90)
+    fuels.add_fuel("Tasty Cheese", 1, 2, multiplicative = True)
+    fuels.add_fuel(items.search_by_name("Catalyst"), 3, 3, multiplicative = True)
+    fuels.add_fuel(items.search_by_name("Hyper Catalyst"), 6, 4, multiplicative = True)
+
+    return fuels
+
+def create_bonuses():
+    bonuses = Other_bonuses()
+
+    bonuses.add_crystal("farm crystal", 10, "farming", 8)
+    bonuses.add_crystal("woodcutting crystal", 10, "foraging", 12)
+    bonuses.add_crystal("mithril crystal", 10, "mining", 40)
+
+    return bonuses
