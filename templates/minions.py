@@ -1,3 +1,5 @@
+DEBUG = False
+
 class Minion():
     def __init__(self, id, name, minion_type, products, items_per_actions, time_between_actions_for_every_tier, max_tier, xp_per_item, use_autosmelt, use_chicken_egg, use_flint_shovel, special_type, can_be_affected_by_crystal, special_minion_case):
         self.__id = id
@@ -9,7 +11,6 @@ class Minion():
 
         self.__items_per_actions = items_per_actions
         self.__xp_per_item = xp_per_item
-        self.__NPC_prize = None
 
         self.__use_autosmelt = use_autosmelt
         self.__use_chicken_egg = use_chicken_egg
@@ -17,40 +18,39 @@ class Minion():
         self.__special_type = special_type
         self.__affected_by_crystal = can_be_affected_by_crystal
 
-        if type(products) == str:
+        if type(products) == list:
+            self.__has_only_one_product = False
+            self.__products = products
+
+        else:
             self.__has_only_one_product = True
             self.__product = products
 
-        else:
-            self.__has_only_one_product = False
-            self.__products = products
-        """
-        TEPORARY DISABLED!
         if special_minion_case != "flower":
             self.__check()
-        """
+
     def __repr__(self):
         to_print = "Name: " + self.__name + "\n"
         to_print += "Id: " + str(self.__id)  + "\n"
         to_print += "Type: " + self.__type  + "\n"
 
         if self.__has_only_one_product:
-            to_print += "Product: " + self.__product + "\n"
+            to_print += "Product: " + self.__product.get_name() + "\n"
         else:
             to_print += "Products: "
             if self.__use_autosmelt:
-                to_print  += f"Without autosmelt upgrade: {self.__products[0]}, WITH autosmelt upgrade: {self.__products[1]}\n"
+                to_print  += f"Without autosmelt upgrade: {self.__products[0].get_name()}, WITH autosmelt upgrade: {self.__products[1].get_name()}\n"
 
             elif self.__use_chicken_egg:
-                to_print  += f"{self.__products[0]}, {self.__products[1]} + with chicken egg upgrade: {self.__products[2]}\n"
+                to_print  += f"{self.__products[0].get_name()}, {self.__products[1].get_name()} + with chicken egg upgrade: {self.__products[2].get_name()}\n"
 
             elif self.__use_flint_shovel:
-                to_print  += f"Without flint shovel upgrade: {self.__products[0]}, WITH flint shovel upgrade: {self.__products[1]}\n"
+                to_print  += f"Without flint shovel upgrade: {self.__products[0].get_name()}, WITH flint shovel upgrade: {self.__products[1].get_name()}\n"
 
 
             else:
                 for product in self.__products:
-                    to_print += product + ", "
+                    to_print += product.get_name() + ", "
                 to_print = to_print[:-2] + "\n"
 
         if self.__has_only_one_product:
@@ -58,7 +58,7 @@ class Minion():
         else:
             to_print += "Items per action: "
             for i in range(len(self.__products)):
-                to_print += str(self.__items_per_actions[i]) + " x " + self.__products[i] + ", "
+                to_print += str(self.__items_per_actions[i]) + " x " + self.__products[i].get_name() + ", "
             to_print = to_print[:-2] + "\n"
 
         if self.__has_only_one_product:
@@ -66,15 +66,19 @@ class Minion():
         else:
             to_print += "XP per item: "
             for i in range(len(self.__products)):
-                to_print += str(self.__xp_per_item[i]) + "XP for " + self.__products[i] + ", "
+                to_print += str(self.__xp_per_item[i]) + "XP for " + self.__products[i].get_name() + ", "
             to_print = to_print[:-2] + "\n"
 
         if self.__has_only_one_product:
-            to_print += f"NPC prize, coins per item:  {self.__NPC_prize}\n"
+            npc_price = self.__product.get_npc_price()
+            if npc_price:
+                to_print += f"NPC price -> coins per item:  {self.__NPC_prize}\n"
+            else:
+                to_print += "Product cannot be sold to NPC\n"
         else:
             to_print += "NPC prize, coins per item: "
-            for i in range(len(self.__products)):
-                to_print += str(self.__NPC_prize[i]) + " coin for " + self.__products[i] + ", "
+            for item in self.__products:
+                to_print += f" {item.get_npc_price()} coin for {item.get_name()}, "
             to_print = to_print[:-2] + "\n"
 
 
@@ -189,19 +193,19 @@ class Minion():
         errors_num, errors = value_check(errors_num, errors, self.__max_tier, "max tier", int)
 
         if self.__has_only_one_product:
-            errors_num, errors = value_check(errors_num, errors, self.__product, "product", str)
+            errors_num, errors = value_check(errors_num, errors, self.__product.get_name(), "product", str)
             errors_num, errors = value_check(errors_num, errors, self.__items_per_actions, "items per actions", [int, float])
             errors_num, errors = value_check(errors_num, errors, self.__xp_per_item, "XP per item", [int, float], zero = True)
-            errors_num, errors = value_check(errors_num, errors, self.__NPC_prize, "NPC prize", [int, float])
+            errors_num, errors = value_check(errors_num, errors, self.__product.get_npc_price(), "NPC prize", [int, float, type(None)])
         else:
-            errors_num, errors = value_check(errors_num, errors, self.__products, "product", list, lenght = len(self.__products), in_list_values = "str")
+            errors_num, errors = value_check(errors_num, errors, [i.get_name() for i in self.__products], "product", list, lenght = len(self.__products), in_list_values = "str")
             errors_num, errors = value_check(errors_num, errors, self.__items_per_actions, "items per actions", list, lenght = len(self.__products), in_list_values = "int")
             errors_num, errors = value_check(errors_num, errors, self.__xp_per_item, "XP per item", list, lenght = len(self.__products), in_list_values = "int", zero = True)
-            errors_num, errors = value_check(errors_num, errors, self.__NPC_prize, "NPC prize", list, lenght = len(self.__products), in_list_values = "int")
+            errors_num, errors = value_check(errors_num, errors, [i.get_npc_price() for i in self.__products], "NPC prize", list, lenght = len(self.__products), in_list_values = "int")
 
         if errors_num:
             print(f"\n{self.__name} minion checking finished with {errors_num} error(s)\n{errors}")
-        else:
+        elif DEBUG:
             print(f"{self.__name} minion checking finished with {errors_num} errors")
 
     def get_id(self):
@@ -238,8 +242,11 @@ class Minion():
         else:
             return self.__products
 
-    def get_npc_prize(self):
-        return self.__NPC_prize
+    def get_npc_price(self):
+        if self.__has_only_one_product:
+            return self.__product.get_npc_price()
+        else:
+            return [i.get_npc_price() for i in self.__products]
 
     def has_only_one_product(self):
         return self.__has_only_one_product
