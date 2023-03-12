@@ -1,3 +1,6 @@
+# **THIS PROJECT IS OUTDATED AND NOT EVEN RUNNABLE IN THIS STATE**
+- unfortunately I propably won't fix it :/ 
+
 ## This is README.md for Hypixel Skyblock Minion Calculator.
 
 ##### CREDITS and LINKS:
